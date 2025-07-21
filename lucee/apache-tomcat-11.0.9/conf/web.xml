@@ -270,7 +270,7 @@
   <!--                       JSP page should the rules for quoting of       -->
   <!--                       attributes described in JSP.1.6 be applied to  -->
   <!--                       the expression? [true]                         -->
-
+  <!--
     <servlet>
         <servlet-name>jsp</servlet-name>
         <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
@@ -284,7 +284,52 @@
         </init-param>
         <load-on-startup>3</load-on-startup>
     </servlet>
+-->
 
+  <!-- ===================================================================== -->
+  <!-- Lucee CFML Servlet - this is the main Lucee servlet                   -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <servlet>
+    <description>Lucee CFML Engine</description>
+    <servlet-name>CFMLServlet</servlet-name>    
+    <servlet-class>lucee.loader.servlet.jakarta.CFMLServlet</servlet-class>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- to specify the location of the Lucee Server config and libraries,   -->
+    <!-- uncomment the init-param below.  make sure that the param-value     -->
+    <!-- points to a valid folder, and that the process that runs Lucee has  -->
+    <!-- write permissions to that folder.  leave commented for defaults.    -->
+    <!--
+    <init-param>
+      <param-name>lucee-server-directory</param-name>
+      <param-value>/var/Lucee/config/server/</param-value>
+      <description>Lucee Server configuration directory (for Server-wide configurations, settings, and libraries)</description>
+    </init-param>
+    !-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- to specify the location of the Web Contexts' config and libraries,  -->
+    <!-- uncomment the init-param below.  make sure that the param-value     -->
+    <!-- points to a valid folder, and that the process that runs Lucee has  -->
+    <!-- write permissions to that folder.  the {web-context-label} can be   -->
+    <!-- set in Lucee Server Admin homepage.  leave commented for defaults.  -->
+    <!--
+    <init-param>
+      <param-name>lucee-web-directory</param-name>
+      <param-value>/var/Lucee/config/web/{web-context-label}/</param-value> 
+      <description>Lucee Web Directory (for Website-specific configurations, settings, and libraries)</description>
+    </init-param>
+    !-->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <!-- ===================================================================== -->
+  <!-- Lucee REST Servlet - handles Lucee's RESTful web services             -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <servlet>
+    <description>Lucee Servlet for RESTful services</description>
+    <servlet-name>RestServlet</servlet-name>    
+    <servlet-class>lucee.loader.servlet.jakarta.RestServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
 
   <!-- NOTE: An SSI Filter is also available as an alternative SSI          -->
   <!-- implementation. Use either the Servlet or the Filter but NOT both.   -->
@@ -445,10 +490,29 @@
     </servlet-mapping>
 
     <!-- The mappings for the JSP servlet -->
-    <servlet-mapping>
+    <!--<servlet-mapping>
         <servlet-name>jsp</servlet-name>
         <url-pattern>*.jsp</url-pattern>
         <url-pattern>*.jspx</url-pattern>
+    </servlet-mapping> -->
+
+    <!-- Mappings for the Lucee servlet -->
+    <servlet-mapping>
+        <servlet-name>CFMLServlet</servlet-name>
+        <url-pattern>*.cfm</url-pattern>
+        <url-pattern>*.cfml</url-pattern>
+        <url-pattern>*.cfc</url-pattern>
+        <url-pattern>*.cfs</url-pattern>
+        <!-- Basic SES Mappings -->
+        <url-pattern>/index.cfc/*</url-pattern>
+        <url-pattern>/index.cfm/*</url-pattern>
+        <url-pattern>/index.cfml/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- mapping for Lucee's REST servlet -->
+    <servlet-mapping>
+        <servlet-name>RestServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
     <!-- The mapping for the SSI servlet -->
@@ -4747,9 +4811,9 @@
   <!-- to use within your application.                                      -->
 
     <welcome-file-list>
+        <welcome-file>index.cfm</welcome-file>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
-        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
 </web-app>
