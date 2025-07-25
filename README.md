@@ -1,4 +1,4 @@
-# Lucee 6.2.2.66RC: Simple Guide — How I Upgraded to Lucee 6.2.2.66RC from Tomcat 9.0.14 to Tomcat 11.0.9 and JRE 17 (or even netter JRE 21) on Ubuntu 20.04 LTS.
+# Lucee 6.2.2.66RC: Simple Guide — How I Upgraded to Lucee 6.2.2.66RC from Tomcat 9.0.14 to Tomcat 11.0.9 and JRE 17 (or even better JRE 21) on Ubuntu 20.04 LTS.
 
 This is a simple, step-by-step guide documenting how I manually upgraded an old Lucee installation (originally installed with the Lucee Linux Installer) to **Lucee 6.2.2.66RC** with **Tomcat 11.0.9** and **JRE 17**.
 
